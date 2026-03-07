@@ -1,13 +1,13 @@
-Hi! Greetings! Howdy! Welcome to the Game Modifiers Readme! These are options that can change the game in some way! A vast majority of these are booleans, so they'll toggle on or off depening if they're set to true or false.
+Hi! Greetings! Howdy! Welcome to the Game Modifiers Readme! These are options that can change the game in some way! A vast majority of these are booleans, so they'll toggle on or off depending if they're set to true or false.
 
-GameMode.CrazyOption1 - Invisighoul
+GameMode.CrazyOption1 - Invisi-ghoul (Invisibility for all)
 GameMode.CrazyOption2 - Low Gravity
 GameMode.CrazyOption3 - Ridiculously Low Health
-GameMode.CrazyOption4 - Infinite Ammo
+GameMode.CrazyOption4 - Infini-ammo
 GameMode.CrazyOption5 - Speed Boost Craziness
 GameMode.CrazyOption6 - Simply Explode!
-GameMode.CrazyOption7 - Slowmo on Inflicting Damage
-GameMode.CrazyOption8 - Super Crazy Knockback
+GameMode.CrazyOption7 - Time Warp (Slowmo on Inflicting Damage)
+GameMode.CrazyOption8 - Super Crazy Knock-back Mode
 GameMode.CrazyOption9 - Time Bomb Madness
 GameMode.SkipSpawnRandomCostumes - Character Jumble
 GameMode.QuickRegen - Crazy Regeneration

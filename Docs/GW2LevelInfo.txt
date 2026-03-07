@@ -1,6 +1,9 @@
 Welcome! Below is the structure/setup of Levels for PVZ GW2! Here's can example. Let's say I, as the host, want to host a game of the Backyard Battleground.
 
+--LEVEL--
 Level = Level_FE_Hub
+
+--INCLUSION--
 Inclusion = GameMode=FreeRoam;TOD=Day;HostedMode=ServerHosted
 
 

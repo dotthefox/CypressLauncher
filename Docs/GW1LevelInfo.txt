@@ -1,6 +1,9 @@
 Welcome! Below is the structure/setup of Levels for PVZ GW1! Here's can example. Let's say I, as the host, want to host a game of Garden Ops in Garden Center
 
+--LEVEL--
 Level = _pvz/Levels/Coastal/Level_COOP_Coastal/Level_COOP_Coastal
+
+--INCLUSION--
 Inclusion = GameMode=Coop0;TOD=Day
 
 
