@@ -495,6 +495,7 @@ public class LaunchWindow : Form
         GameSelectorComboBox.Items.Clear();
         GameSelectorComboBox.Items.Add(PVZGame.GW1);
         GameSelectorComboBox.Items.Add(PVZGame.GW2);
+        GameSelectorComboBox.Items.Add(PVZGame.BFN);
         GetLastSelectedGame(out m_selectedGame);
         GameSelectorComboBox.SelectedIndex = (int)m_selectedGame;
     }
@@ -512,12 +513,23 @@ public class LaunchWindow : Form
         {
             path = s_gameToPatchedExecutableName[m_selectedGame];
             if (!File.Exists(Path.Combine(GetGameDir(), s_gameToPatchedExecutableName[m_selectedGame])))
+            
+
+
             {
                 GameStatusLabel.Text = "First time launch - Creating patched executable (this might take a while)";
+
+                string courgetteApplyCommand = "-apply";
+                if (m_selectedGame == PVZGame.BFN)
+                {
+                    courgetteApplyCommand = "-applybsdiff";
+                }
+
                 ProcessStartInfo startInfo = new ProcessStartInfo
+
                 {
                     FileName = "courgette.exe",
-                    Arguments = $"-apply \"{Path.Combine(GetGameDir(), s_gameToExecutableName[m_selectedGame])}\" {m_selectedGame}.patch \"{Path.Combine(GetGameDir(), s_gameToPatchedExecutableName[m_selectedGame])}\"",
+                    Arguments = $"{courgetteApplyCommand} \"{Path.Combine(GetGameDir(), s_gameToExecutableName[m_selectedGame])}\" {m_selectedGame}.patch \"{Path.Combine(GetGameDir(), s_gameToPatchedExecutableName[m_selectedGame])}\"",
                     Verb = "runas",
                     UseShellExecute = true
                 };
@@ -554,7 +566,7 @@ public class LaunchWindow : Form
         Environment.SetEnvironmentVariable("ContentId", "1026482");
         bool flag = UseModsCheckbox.Checked && !string.IsNullOrEmpty(ModPackCombobox.Text);
         Environment.SetEnvironmentVariable("GAME_DATA_DIR", flag ? Path.Combine(gameDir, "ModData", ModPackCombobox.Text) : null);
-        string text = "-playerName \"" + UsernameTextbox.Text + "\" -console -Client.ServerIp " + ServerIPTextBox.Text + " -allowMultipleInstances -runMultipleGameInstances";
+        string text = "-playerName \"" + UsernameTextbox.Text + "\" -Client.ServerIp " + ServerIPTextBox.Text + " -allowMultipleInstances";
         if (!string.IsNullOrWhiteSpace(ServerPasswordTextBox.Text))
         {
             text = text + " -password " + ServerPasswordTextBox.Text;
@@ -733,7 +745,7 @@ public class LaunchWindow : Form
     {
         ComboBox comboBox = sender as ComboBox;
         comboBox.Items.Clear();
-        string path = Path.Combine("Playlists");
+        string path = Path.Combine(GetGameDir(), "Playlists");
         if (Directory.Exists(path))
         {
             string[] directories = Directory.GetFiles(path);
@@ -1218,10 +1230,17 @@ public class LaunchWindow : Form
             if (!File.Exists(Path.Combine(GetGameDir(), s_gameToPatchedExecutableName[m_selectedGame])))
             {
                 GameStatusLabel.Text = "First time launch - Creating patched executable (this might take a while)";
+
+                string courgetteApplyCommand = "-apply";
+                if (m_selectedGame == PVZGame.BFN)
+                {
+                    courgetteApplyCommand = "-applybsdiff";
+                }
+
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = "courgette.exe",
-                    Arguments = $"-apply \"{Path.Combine(GetGameDir(), s_gameToExecutableName[m_selectedGame])}\" {m_selectedGame}.patch \"{Path.Combine(GetGameDir(), s_gameToPatchedExecutableName[m_selectedGame])}\"",
+                    Arguments = $"{courgetteApplyCommand} \"{Path.Combine(GetGameDir(), s_gameToExecutableName[m_selectedGame])}\" {m_selectedGame}.patch \"{Path.Combine(GetGameDir(), s_gameToPatchedExecutableName[m_selectedGame])}\"",
                     Verb = "runas",
                     UseShellExecute = true
                 };
@@ -1266,7 +1285,7 @@ public class LaunchWindow : Form
         }
         if (playlistflag)
         {
-            text = text + " -usePlaylist -playlistFilename " + Path.Combine("Playlists", PlaylistComboBox.Text);
+            text = text + " -usePlaylist -playlistFilename " + Path.Combine(GetGameDir(), "Playlists", PlaylistComboBox.Text);
         }
         if (s_serverLaunchArgsForGame.ContainsKey(m_selectedGame))
         {
