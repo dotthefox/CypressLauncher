@@ -53,3 +53,5 @@ obj/Release/net8.0-windows/CypressLauncher.Properties.Resources.resources
 obj/Release/net8.0-windows/CypressLauncher.sourcelink.json
 obj/Release/net8.0-windows/ref/CypressLauncher.dll
 obj/Release/net8.0-windows/refint/CypressLauncher.dll
+.vs/CypressLauncher/FileContentIndex/f0bd79d4-6438-4324-880b-1b53e3b3d37b.vsidx
+.vs/CypressLauncher/FileContentIndex/d199535c-c00b-47c2-9bf2-0c887661f3ac.vsidx
