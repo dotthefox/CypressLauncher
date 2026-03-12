@@ -105,8 +105,8 @@ Plants - 1964445672
 Zombies - 1133254212
 
 
-SoloPlaySettings.DisabledPlantAIClassMask - Determines what batch of Plant will spawn in based on the a certain bitmask
-SoloPlaySettings.DisabledZombieAIClassMask - Determines what batch of Zombies will spawn in based on the a certain bitmask
+SoloPlaySettings.DisabledPlantAIClassMask - Determines what batch of Plant will spawn in based on a certain bitmask
+SoloPlaySettings.DisabledZombieAIClassMask - Determines what batch of Zombies will spawn in based on a certain bitmask
 
 Plants:
 Peashooter - 1
