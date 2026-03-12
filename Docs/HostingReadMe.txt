@@ -26,15 +26,19 @@ If there's anything regarding Protocols, set it to UDP.
 If there's anything regarding Device IP, or IP Address, or anything similar, that is your IPv4 address, again, found via ipconfig in command prompt. Under the same category you found the Default Gateway.
 If there's an option to enable the setup, enable it, of course.
 
+5. For the Device IP in the launcher, that is where your IPv4 address goes. 
+NOTE: Every so often, the IPv4 will change, so don't fret if your dedicated server closes moments after launching! You'll have to check it every so often to ensure the server's listening to the right address!
+
 Save once you're done. 
 
+On the right side of the 
 For information on setting up the Level and Inclusion, check out the LevelInfo Readmes.
 If you wish to add a password, set up a password in the Set Server Password box. Leave it blank if you don't want a password.
 If you wish to launch a server with mods, head to the furthest left of the launcher, click Use Mods, and select the ModPack.
 Once everything is set, click Start Server! If everything's been done right, you should see a big white box, that is the thin client of the game that acts as your server!
 Be sure to allow any Firewall permissions if there are any.
 
-Congratulations, if done properly, you should be able to host dedicated servers! For people to join you, you'll have to provide them your router's public IP address. If you want your IP to have a unique hostname, you can use something like no-ip at https://www.noip.com/
+Congratulations, if done properly, you should be able to host dedicated servers! For people to join you, you'll have to provide them your router's public IP address. Quickest way to find what your public IP is through IP Chicken at https://ipchicken.com/ If you want your IP to have a unique hostname, you can use something like no-ip at https://www.noip.com/
 
 
 -- 2 - RADMIN --

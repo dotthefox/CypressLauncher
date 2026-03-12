@@ -1,26 +1,59 @@
-Welcome to the Playlist Readme! Before we get started, here's a reminder!
+Haalloo!!! Welcome to the Playlist Readme! 
 
---REMINDER--
-This README is heavily WIP. I could be wrong with the following on this matter, but from my research, and as of right now, playlists are only functional in Garden Warfare 2. In Garden Warfare 1, you can load a playlist, however, it'll only load the first level, and when the match concludes, it'll loop to the first level listed in the playlist, completely ignoring all other levels below it.
-IsMixed, the option to randomize maps and gamemodes, doesn't work too. Any attempts I've tried, I'd get the server running, however, it would immediately crash. 
+To get Cypress Launcher to detect playlists, create a Playlists folder in your game's directory. Any playlist JSON that is put in the folder will be found by the launcher.
 
-Now that you're aware, lets get started! 
-Within the Playlist folder, You'll find 1 playlist that was made to recreate the multiplayer rotation of Turf Takeover.
+There are a few settings that come before two different methods of rotation. Those include:
+RoundsPerSetup - An integer that determines how many rounds of the same Level and GameMode play before the playlist rotates.
+IsMixed - A boolean that determines if Levels and GameModes will be randomized instead of following an order. More info below
+Loadscreen_GamemodeNameOverride - Overrides the GameMode's name. Will affect every level in rotation of the playlist.
+Loadscreen_LevelNameOverride - Overrides level's name. Will affect every level in rotation of the playlist.
+Loadscreen_LevelDescriptionOverride - Overrides the Level's Description. Will affect every level in rotation of the playlist.
 
-Playlists, as of now, that use PlaylistRotation, start with the following:
-LevelName,
-GameMode,
-TOD,
-SettingsToApply,
 
-LevelName is the Level you want to load into. HOWEVER, unlike the command, where you can have just a Level name, like Level_Rush_Snow. You'll need the entire level's path, which is equivalent to Levels/Level_Rush_Snow/Level_Rush_Snow. You'll find all the full level paths at the bottom of this Readme.
+Here are two different methods of Rotations. PlaylistRotation, and if IsMixed is set to true. Let's go over PlaylistRotation. 
+
+-- PLAYLIST ROTATION --
+PlaylistRotation is what's used if you want your playlist to run in a specified order. This list goes from top to bottom. There are several options determined:
+LevelName (Required)
+GameMode (Required)
+StartPoint <--- (Required - ONLY FOR BFN)
+TOD (Optional)
+SettingsToApply (Optional)
+
+LevelName is the Level you want to load into. HOWEVER, unlike the Sever.LoadLevel command, where you can have just a Level name like Level_Rush_Snow, you'll need the entire level's path, which is equivalent to Levels/Level_Rush_Snow/Level_Rush_Snow. The format is basically Levels/'LevelName'/'LevelName'. For GW1, levels are in completely different paths instead of being organized to one folder. You can find their complete paths in its own LevelInfo Readme.
 
 GameMode is the Game Mode the level loads in to.
+StartPoint is equivalent to that of Sub-GameModes. More Info in the BFNLevelInfo ReadMe. 
 TOD is the Time of Day, whether it's Day or Night
 SettingsToApply are game changing settings/modifiers that'll be applied to the server.
 
-Remember, If you want settings, like lets say for this example, crazy settings! Say you want them only enabled for one match, then disabled. You'll throw them inside the SettingsToApply of the level. Each setting is separated by a Vertical Bar, or |
 
+Remember, If you want settings, like let's say for this example, crazy settings! You will put certain settings that'll be applied to SettingsToApply. Each entry in SettingsToApply is separated by a Vertical Bar, or | 
+
+Example:
+The first entry of the playlist enables
 GameMode.CrazyOption8 true|GameMode.CrazyOption3 true
 
-If you want to disable them the next round or further, make sure to reference them, but to set them false.
+If you want these turned off on the next round, then in the next entry, you'll add it to the SettingsToApply in there, and make it
+GameMode.CrazyOption8 false|GameMode.CrazyOption3 false
+
+More info on Game Modifiers can be found in any GameModifiersReadMes.
+
+
+-- ISMIXED --
+If IsMixed is set to true, Cypress will expect two settings, an additional, optional setting. Those being:
+AvailableModes - A list of GameModes that will be randomized in the playlist
+AvailableLevelsForModes - A list determining what GameMode will be exclusive to what Levels in the randomization
+AvailableTODForLevels - Optional - A list determining what Levels will have Time of Day randomization
+
+Examples of the structurization can be found inside the PlaylistExamples folder.
+
+Bit of a heads up, the structure on playlists using IsMixed for BFN is a tad different. If you wish to make randomized Playlists for BFN, it's recommended to check the example provided and check up its LevelInfo ReadMe.
+
+
+
+
+
+
+
+

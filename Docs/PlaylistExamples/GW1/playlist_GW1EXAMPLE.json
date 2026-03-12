@@ -1,0 +1,16 @@
+{
+  "RoundsPerSetup": 1,
+  "IsMixed": false,
+  "PlaylistRotation": [
+    {
+      "LevelName": "_pvz/Levels/Desert/Level_COOP_Desert/Level_COOP_Desert",
+      "GameMode": "GnomeBomb0",
+      "SettingsToApply": ""
+    },
+    {
+      "LevelName": "_pvz/Levels/COOP_Suburbia/Level_COOP_Suburbia/Level_COOP_Suburbia",
+      "GameMode": "GnomeBomb0",
+      "SettingsToApply": ""
+    }
+  ]
+}

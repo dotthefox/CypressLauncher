@@ -1,0 +1,21 @@
+{
+  "RoundsPerSetup": 1,
+  "IsMixed": false,
+  "Loadscreen_GamemodeNameOverride": "Hello there!",
+  "Loadscreen_LevelNameOverride": "Wow! Different level names!",
+  "Loadscreen_LevelDescriptionOverride": "These will affect ALL levels in rotation!",
+  "PlaylistRotation": [
+    {
+      "LevelName": "Levels/Level_Rush_Themepark/Level_Rush_Themepark",
+      "GameMode": "GnGLarge0",
+      "TOD": "Day",
+      "SettingsToApply": "GameMode.CrazyOption5 true|GameMode.CrazyOptions4 true"
+    },
+    {
+      "LevelName": "Levels/Level_Rush_Snow/Level_Rush_Snow",
+      "GameMode": "GnGLarge0",
+      "TOD": "Day",
+      "SettingsToApply": "GameMode.CrazyOption5 false|GameMode.CrazyOptions4 false"
+    }
+  ]
+}

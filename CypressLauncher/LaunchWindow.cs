@@ -86,14 +86,19 @@ public class LaunchWindow : Form
 
         PVZGame.GW2,
         "-GameMode.SkipIntroHubNIS true"
-    }
+    },
+    {
+
+        PVZGame.BFN,
+        "-GameMode.ShouldSkipHUBTutorial 1 -GameMode.SocialHUBSkipStationTutorials 1 "
+    },
 
     };
 
     private static Dictionary<PVZGame, string> s_serverLaunchArgsForGame = new Dictionary<PVZGame, string> {
     {
         PVZGame.GW1,
-        "-Online.ClientIsPresenceEnabled false -Online.ServerIsPresenceEnabled false -SyncedBFSettings.AllUnlocksUnlocked true -PingSite ams -name \"PVZGW Dedicated Server\" -BFServer.MapSequencerEnabled false "
+        "-Online.ClientIsPresenceEnabled false -Online.ServerIsPresenceEnabled false -Game.Platform GamePlatform_Win32 -SyncedBFSettings.AllUnlocksUnlocked true -PingSite ams -name \"PVZGW Dedicated Server\"  "
     },
 
     {
@@ -101,6 +106,11 @@ public class LaunchWindow : Form
         PVZGame.GW2,
         "-enableServerLog -platform Win32 -console -Game.Platform GamePlatform_Win32 -Game.EnableServerLog true -GameMode.SkipIntroHubNIS true -Online.Backend Backend_Local -Online.PeerBackend Backend_Local -PVZServer.MapSequencerEnabled false "
 
+    },
+
+    {
+        PVZGame.BFN,
+        "-Online.ClientIsPresenceEnabled 0 -Online.ServerIsPresenceEnabled 0 -Game.Platform GamePlatform_Win32 -allUnlocksUnlocked -GameMode.OverrideRoundStartPlayerCount 1 -Online.Backend Backend_Local -Online.PeerBackend Backend_Local -PVZServer.MapSequencerEnabled false "
     }
     };
 
@@ -163,6 +173,10 @@ public class LaunchWindow : Form
     private Label PlaylistLabel;
     private ComboBox PlaylistComboBox;
     private CheckBox PlaylistCheckBox;
+    private Label StartPointLabel;
+    private TextBox StartPointTextBox;
+    private Label label7;
+    private CheckBox AllowAIBackfillCheckBox;
     private Label ServerPasswordLabel;
 
     public LaunchWindow()
@@ -322,6 +336,7 @@ public class LaunchWindow : Form
             jObject2["DedicatedServerPassword"] = DedicatedServerPasswordTextBox.Text;
             jObject2["PlayerCount"] = PlayerCountTextBox.Text;
             jObject2["AdditionalServerLaunchArguments"] = AdditionalServerLaunchArgumentsTextBox.Text;
+            jObject2["StartPoint"] = StartPointTextBox.Text;
             string text = GameSelectorComboBox.SelectedItem.ToString();
             jObject["SelectedGame"] = text;
             jObject[text] = jObject2;
@@ -415,6 +430,10 @@ public class LaunchWindow : Form
                 {
                     AdditionalServerLaunchArgumentsTextBox.Text = (string?)jObject2["AdditionalServerLaunchArguments"];
                 }
+                if (jObject2.ContainsKey("StartPoint"))
+                {
+                    StartPointTextBox.Text = (string?)jObject2["StartPoint"];
+                }
             }
             else if (profileName == null && jObject.ContainsKey("SelectedGame") && Enum.TryParse<PVZGame>((string?)jObject["SelectedGame"], out result))
             {
@@ -467,6 +486,10 @@ public class LaunchWindow : Form
                     {
                         AdditionalServerLaunchArgumentsTextBox.Text = (string?)jObject3["AdditionalServerLaunchArguments"];
                     }
+                    if (jObject3.ContainsKey("StartPoint"))
+                    {
+                        StartPointTextBox.Text = (string?)jObject3["StartPoint"];
+                    }
                 }
             }
             else
@@ -481,6 +504,7 @@ public class LaunchWindow : Form
                 DedicatedServerPasswordTextBox.Text = string.Empty;
                 PlayerCountTextBox.Text = string.Empty;
                 AdditionalServerLaunchArgumentsTextBox.Text = string.Empty;
+                StartPointTextBox.Text = string.Empty;
                 GameDirectoryLabel.Text = string.Empty;
             }
         }
@@ -513,7 +537,7 @@ public class LaunchWindow : Form
         {
             path = s_gameToPatchedExecutableName[m_selectedGame];
             if (!File.Exists(Path.Combine(GetGameDir(), s_gameToPatchedExecutableName[m_selectedGame])))
-            
+
 
 
             {
@@ -566,7 +590,7 @@ public class LaunchWindow : Form
         Environment.SetEnvironmentVariable("ContentId", "1026482");
         bool flag = UseModsCheckbox.Checked && !string.IsNullOrEmpty(ModPackCombobox.Text);
         Environment.SetEnvironmentVariable("GAME_DATA_DIR", flag ? Path.Combine(gameDir, "ModData", ModPackCombobox.Text) : null);
-        string text = "-playerName \"" + UsernameTextbox.Text + "\" -Client.ServerIp " + ServerIPTextBox.Text + " -allowMultipleInstances";
+        string text = "-playerName \"" + UsernameTextbox.Text + "\" -console -Client.ServerIp " + ServerIPTextBox.Text + " -allowMultipleInstances -RenderDevice.IntelMinDriverVersion 0.0";
         if (!string.IsNullOrWhiteSpace(ServerPasswordTextBox.Text))
         {
             text = text + " -password " + ServerPasswordTextBox.Text;
@@ -575,6 +599,12 @@ public class LaunchWindow : Form
         {
             text = text + " " + s_specialLaunchArgsForGame[m_selectedGame];
         }
+        //Datapath workaround since GAME_DATA_DIR doesn't work for BFN
+        if (flag && (m_selectedGame == PVZGame.BFN))
+        {
+            text = text + " -datapath \"" + Path.Combine(GetGameDir(), "ModData", ModPackCombobox.Text + "\"");
+        }
+
         if (!string.IsNullOrWhiteSpace(AdditionalLaunchArgumentsBox.Text))
         {
             text = text + " " + AdditionalLaunchArgumentsBox.Text;
@@ -633,7 +663,7 @@ public class LaunchWindow : Form
     {
         Invoke((System.Windows.Forms.MethodInvoker)delegate
         {
-            GameStatusLabel.Text = "Game exited with code " + (sender as Process)?.ExitCode.ToString("X"); 
+            GameStatusLabel.Text = "Game exited with code " + (sender as Process)?.ExitCode.ToString("X");
             GameStatusLabel.ForeColor = Color.White;
             try
             {
@@ -694,6 +724,30 @@ public class LaunchWindow : Form
         {
             BackgroundImage = image;
         }
+
+
+        //Things that change if BFN is chosen
+        if (m_selectedGame == PVZGame.BFN)
+        {
+            StartPointLabel.Visible = true;
+            StartPointTextBox.Visible = true;
+            StartPointTextBox.Enabled = true;
+            LevelLabel.Text = "DSub";
+            UsernameTextbox.MaxLength = 16;
+            AllowAIBackfillCheckBox.Enabled = true;
+            AllowAIBackfillCheckBox.Visible = true;
+        }
+        else
+        {
+            StartPointLabel.Visible = false;
+            StartPointTextBox.Visible = false;
+            StartPointTextBox.Enabled = false;
+            LevelLabel.Text = "Level";
+            UsernameTextbox.MaxLength = 32;
+            AllowAIBackfillCheckBox.Enabled = false;
+            AllowAIBackfillCheckBox.Visible = false;
+        }
+
         LoadUserData(m_selectedGame.ToString());
     }
 
@@ -804,6 +858,10 @@ public class LaunchWindow : Form
         PlaylistLabel = new Label();
         PlaylistComboBox = new ComboBox();
         PlaylistCheckBox = new CheckBox();
+        StartPointLabel = new Label();
+        StartPointTextBox = new TextBox();
+        label7 = new Label();
+        AllowAIBackfillCheckBox = new CheckBox();
         SuspendLayout();
         // 
         // ServerIPTextBox
@@ -879,7 +937,7 @@ public class LaunchWindow : Form
         // 
         SelectGameDirectoryButton.Location = new Point(5, 20);
         SelectGameDirectoryButton.Name = "SelectGameDirectoryButton";
-        SelectGameDirectoryButton.Size = new Size(133, 23);
+        SelectGameDirectoryButton.Size = new Size(127, 23);
         SelectGameDirectoryButton.TabIndex = 0;
         SelectGameDirectoryButton.Text = "Select Game Directory";
         SelectGameDirectoryButton.UseVisualStyleBackColor = true;
@@ -889,7 +947,7 @@ public class LaunchWindow : Form
         // 
         label3.AutoSize = true;
         label3.BackColor = Color.Transparent;
-        label3.Location = new Point(134, 75);
+        label3.Location = new Point(161, 60);
         label3.Name = "label3";
         label3.Size = new Size(521, 15);
         label3.TabIndex = 8;
@@ -937,7 +995,7 @@ public class LaunchWindow : Form
         // 
         AutoFindGameDirButton.Location = new Point(5, 49);
         AutoFindGameDirButton.Name = "AutoFindGameDirButton";
-        AutoFindGameDirButton.Size = new Size(133, 23);
+        AutoFindGameDirButton.Size = new Size(127, 23);
         AutoFindGameDirButton.TabIndex = 1;
         AutoFindGameDirButton.Text = "Scan for Directory";
         AutoFindGameDirButton.UseVisualStyleBackColor = true;
@@ -1099,7 +1157,7 @@ public class LaunchWindow : Form
         // 
         PlayerCountLabel.AutoSize = true;
         PlayerCountLabel.BackColor = SystemColors.Control;
-        PlayerCountLabel.Location = new Point(692, 243);
+        PlayerCountLabel.Location = new Point(703, 211);
         PlayerCountLabel.Name = "PlayerCountLabel";
         PlayerCountLabel.Size = new Size(75, 15);
         PlayerCountLabel.TabIndex = 32;
@@ -1108,7 +1166,7 @@ public class LaunchWindow : Form
         // PlayerCountTextBox
         // 
         PlayerCountTextBox.Anchor = AnchorStyles.Bottom;
-        PlayerCountTextBox.Location = new Point(692, 261);
+        PlayerCountTextBox.Location = new Point(703, 229);
         PlayerCountTextBox.Name = "PlayerCountTextBox";
         PlayerCountTextBox.Size = new Size(48, 23);
         PlayerCountTextBox.TabIndex = 18;
@@ -1117,7 +1175,7 @@ public class LaunchWindow : Form
         // 
         AdditionalServerLaunchArgumentsLabel.AutoSize = true;
         AdditionalServerLaunchArgumentsLabel.BackColor = SystemColors.Control;
-        AdditionalServerLaunchArgumentsLabel.Location = new Point(456, 31);
+        AdditionalServerLaunchArgumentsLabel.Location = new Point(456, 14);
         AdditionalServerLaunchArgumentsLabel.Name = "AdditionalServerLaunchArgumentsLabel";
         AdditionalServerLaunchArgumentsLabel.Size = new Size(201, 15);
         AdditionalServerLaunchArgumentsLabel.TabIndex = 20;
@@ -1126,7 +1184,7 @@ public class LaunchWindow : Form
         // AdditionalServerLaunchArgumentsTextBox
         // 
         AdditionalServerLaunchArgumentsTextBox.Anchor = AnchorStyles.Bottom;
-        AdditionalServerLaunchArgumentsTextBox.Location = new Point(456, 49);
+        AdditionalServerLaunchArgumentsTextBox.Location = new Point(456, 32);
         AdditionalServerLaunchArgumentsTextBox.Name = "AdditionalServerLaunchArgumentsTextBox";
         AdditionalServerLaunchArgumentsTextBox.Size = new Size(272, 23);
         AdditionalServerLaunchArgumentsTextBox.TabIndex = 19;
@@ -1135,32 +1193,73 @@ public class LaunchWindow : Form
         // 
         PlaylistLabel.AutoSize = true;
         PlaylistLabel.BackColor = SystemColors.Control;
-        PlaylistLabel.Location = new Point(692, 191);
+        PlaylistLabel.Location = new Point(703, 159);
         PlaylistLabel.Name = "PlaylistLabel";
         PlaylistLabel.Size = new Size(78, 15);
+        PlaylistLabel.TabIndex = 0;
         PlaylistLabel.Text = "Select Playlist";
+        // 
+        // PlaylistComboBox
+        // 
+        PlaylistComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+        PlaylistComboBox.FormattingEnabled = true;
+        PlaylistComboBox.Location = new Point(703, 177);
+        PlaylistComboBox.Name = "PlaylistComboBox";
+        PlaylistComboBox.Size = new Size(154, 23);
+        PlaylistComboBox.TabIndex = 17;
+        PlaylistComboBox.DropDown += PlaylistCombobox_OnDropDown;
         // 
         // PlaylistCheckBox
         // 
         PlaylistCheckBox.AutoSize = true;
         PlaylistCheckBox.BackColor = SystemColors.Control;
         PlaylistCheckBox.CheckAlign = ContentAlignment.MiddleRight;
-        PlaylistCheckBox.Location = new Point(692, 161);
+        PlaylistCheckBox.Location = new Point(703, 129);
         PlaylistCheckBox.Name = "PlaylistCheckBox";
         PlaylistCheckBox.Size = new Size(85, 19);
         PlaylistCheckBox.TabIndex = 16;
         PlaylistCheckBox.Text = "Use Playlist";
         PlaylistCheckBox.UseVisualStyleBackColor = false;
         // 
-        // PlaylistComboBox
+        // StartPointLabel
         // 
-        PlaylistComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-        PlaylistComboBox.FormattingEnabled = true;
-        PlaylistComboBox.Location = new Point(692, 209);
-        PlaylistComboBox.Name = "PlaylistComboBox";
-        PlaylistComboBox.Size = new Size(154, 23);
-        PlaylistComboBox.TabIndex = 17;
-        PlaylistComboBox.DropDown += PlaylistCombobox_OnDropDown;
+        StartPointLabel.AutoSize = true;
+        StartPointLabel.BackColor = SystemColors.Control;
+        StartPointLabel.Location = new Point(703, 258);
+        StartPointLabel.Name = "StartPointLabel";
+        StartPointLabel.Size = new Size(62, 15);
+        StartPointLabel.TabIndex = 34;
+        StartPointLabel.Text = "Start Point";
+        // 
+        // StartPointTextBox
+        // 
+        StartPointTextBox.Anchor = AnchorStyles.Bottom;
+        StartPointTextBox.Location = new Point(703, 276);
+        StartPointTextBox.Name = "StartPointTextBox";
+        StartPointTextBox.Size = new Size(154, 23);
+        StartPointTextBox.TabIndex = 19;
+        // 
+        // label7
+        // 
+        label7.AutoSize = true;
+        label7.BackColor = Color.Transparent;
+        label7.Location = new Point(79, 77);
+        label7.Name = "label7";
+        label7.Size = new Size(692, 15);
+        label7.TabIndex = 35;
+        label7.Text = "If you own the game legitimately, you MUST have EA Desktop opened before joining a server. Otherwise, you WILL run into issues.";
+        // 
+        // AllowAIBackfillCheckBox
+        // 
+        AllowAIBackfillCheckBox.AutoSize = true;
+        AllowAIBackfillCheckBox.BackColor = SystemColors.Control;
+        AllowAIBackfillCheckBox.CheckAlign = ContentAlignment.MiddleRight;
+        AllowAIBackfillCheckBox.Location = new Point(703, 313);
+        AllowAIBackfillCheckBox.Name = "AllowAIBackfillCheckBox";
+        AllowAIBackfillCheckBox.Size = new Size(85, 19);
+        AllowAIBackfillCheckBox.TabIndex = 36;
+        AllowAIBackfillCheckBox.Text = "Allow AI Backfill";
+        AllowAIBackfillCheckBox.UseVisualStyleBackColor = false;
         // 
         // LaunchWindow
         // 
@@ -1168,6 +1267,10 @@ public class LaunchWindow : Form
         AutoScaleMode = AutoScaleMode.Font;
         BackgroundImageLayout = ImageLayout.Stretch;
         ClientSize = new Size(867, 450);
+        Controls.Add(AllowAIBackfillCheckBox);
+        Controls.Add(label7);
+        Controls.Add(StartPointLabel);
+        Controls.Add(StartPointTextBox);
         Controls.Add(PlaylistLabel);
         Controls.Add(PlaylistComboBox);
         Controls.Add(PlaylistCheckBox);
@@ -1278,75 +1381,160 @@ public class LaunchWindow : Form
         bool flag = UseModsCheckbox.Checked && !string.IsNullOrEmpty(ModPackCombobox.Text);
         Environment.SetEnvironmentVariable("GAME_DATA_DIR", flag ? Path.Combine(gameDir, "ModData", ModPackCombobox.Text) : null);
         bool playlistflag = PlaylistCheckBox.Checked && !string.IsNullOrEmpty(PlaylistCheckBox.Text);
-        string text = "-server -level " + LevelTextBox.Text + " -listen " + DeviceIPTextBox.Text + " -inclusion " + InclusionTextBox.Text + " -allowMultipleInstances " + " -Network.ServerAddress " + DeviceIPTextBox.Text + " ";
-        if (!string.IsNullOrWhiteSpace(DedicatedServerPasswordTextBox.Text))
-        {
-            text = text + " -password " + DedicatedServerPasswordTextBox.Text;
-        }
-        if (playlistflag)
-        {
-            text = text + " -usePlaylist -playlistFilename " + Path.Combine(GetGameDir(), "Playlists", PlaylistComboBox.Text);
-        }
-        if (s_serverLaunchArgsForGame.ContainsKey(m_selectedGame))
-        {
-            text = text + " " + s_serverLaunchArgsForGame[m_selectedGame];
-        }
-        if (!string.IsNullOrWhiteSpace(AdditionalServerLaunchArgumentsTextBox.Text))
-        {
-            text = text + " " + AdditionalServerLaunchArgumentsTextBox.Text;
-        }
-        if (!string.IsNullOrWhiteSpace(PlayerCountTextBox.Text))
-        {
-            text = text + " -Network.MaxClientCount " + PlayerCountTextBox.Text;
-        }
-        Environment.SetEnvironmentVariable("GW_LAUNCH_ARGS", text);
-        if (!File.Exists(Path.Combine(gameDir, s_destDLLName)))
+        bool aibackfillflag = AllowAIBackfillCheckBox.Checked;
+        string text;
+        if (m_selectedGame < PVZGame.BFN)
         {
 
+            text = "-server -level " + LevelTextBox.Text + " -listen " + DeviceIPTextBox.Text + " -inclusion " + InclusionTextBox.Text + " -allowMultipleInstances " + "-Network.ServerAddress" + DeviceIPTextBox.Text + " ";
+            if (!string.IsNullOrWhiteSpace(DedicatedServerPasswordTextBox.Text))
+            {
+                text = text + " -password " + DedicatedServerPasswordTextBox.Text;
+            }
+            if (playlistflag)
+            {
+                text = text + " -usePlaylist -playlistFilename \"" + Path.Combine(GetGameDir(), "Playlists", PlaylistComboBox.Text + "\"");
+            }
+            if (s_serverLaunchArgsForGame.ContainsKey(m_selectedGame))
+            {
+                text = text + " " + s_serverLaunchArgsForGame[m_selectedGame];
+            }
+            if (!string.IsNullOrWhiteSpace(AdditionalServerLaunchArgumentsTextBox.Text))
+            {
+                text = text + " " + AdditionalServerLaunchArgumentsTextBox.Text;
+            }
+            if (!string.IsNullOrWhiteSpace(PlayerCountTextBox.Text))
+            {
+                text = text + " -Network.MaxClientCount " + PlayerCountTextBox.Text;
+            }
+            Environment.SetEnvironmentVariable("GW_LAUNCH_ARGS", text);
+            if (!File.Exists(Path.Combine(gameDir, s_destDLLName)))
+            {
+
+                try
+                {
+                    File.Copy(GetServerDLLName(), Path.Combine(gameDir, s_destDLLName), overwrite: true);
+                }
+                catch (Exception ex2)
+                {
+                    MessageBox.Show("Exception when attempting to copy " + GetServerDLLName() + ": " + ex2.Message);
+                    return;
+                }
+
+            }
+            ProcessStartInfo startInfo2 = new ProcessStartInfo
+            {
+                FileName = Path.Combine(gameDir, path),
+                Arguments = text,
+                UseShellExecute = false
+            };
+            Process process2 = new Process
+            {
+                StartInfo = startInfo2,
+                EnableRaisingEvents = true
+            };
+            process2.Exited += GameProcess_Exited;
             try
             {
-                File.Copy(GetServerDLLName(), Path.Combine(gameDir, s_destDLLName), overwrite: true);
+                process2.Start();
+                GameStatusLabel.Text = $"Game launched (PID {process2.Id})";
+                GameStatusLabel.ForeColor = Color.LightGreen;
             }
-            catch (Exception ex2)
+            catch (Win32Exception ex3)
             {
-                MessageBox.Show("Exception when attempting to copy " + GetServerDLLName() + ": " + ex2.Message);
-                return;
+                if (ex3.NativeErrorCode == 2)
+                {
+                    GameStatusLabel.Text = "Game executable not found.";
+                }
+                else
+                {
+                    MessageBox.Show("Exception: " + ex3.Message);
+                }
             }
+            catch (Exception ex4)
+            {
+                MessageBox.Show("Exception: " + ex4.Message);
+            }
+        }
+        else
+        {
+            text = "-server" + " -listen " + DeviceIPTextBox.Text + " -dsub " + LevelTextBox.Text + " -inclusion " + InclusionTextBox.Text + " -startpoint " + StartPointTextBox.Text + " -allowMultipleInstances -enableServerLog " + "-Network.ServerAddress " + DeviceIPTextBox.Text;
+            if (!string.IsNullOrWhiteSpace(DedicatedServerPasswordTextBox.Text))
+            {
+                text = text + " -password " + DedicatedServerPasswordTextBox.Text;
+            }
+            if (playlistflag)
+            {
+                text = text + " -usePlaylist -playlistFilename \"" + Path.Combine(GetGameDir(), "Playlists", PlaylistComboBox.Text + "\"");
+            }
+            if (flag)
+            {
+                text = text + " -datapath \"" + Path.Combine(GetGameDir(), "ModData", ModPackCombobox.Text + "\"");
+            }
+            if (!aibackfillflag)
+            {
+                text = text + "-GameMode.BackfillMpWithAI false";
+            }
+            if (s_serverLaunchArgsForGame.ContainsKey(m_selectedGame))
+            {
+                text = text + " " + s_serverLaunchArgsForGame[m_selectedGame];
+            }
+            if (!string.IsNullOrWhiteSpace(AdditionalServerLaunchArgumentsTextBox.Text))
+            {
+                text = text + " " + AdditionalServerLaunchArgumentsTextBox.Text;
+            }
+            if (!string.IsNullOrWhiteSpace(PlayerCountTextBox.Text))
+            {
+                text = text + " -Network.MaxClientCount " + PlayerCountTextBox.Text + " -NetObjectSystem.MaxServerConnectionCount " + PlayerCountTextBox.Text + " -Online.DirtySockMaxConnectionCount " + PlayerCountTextBox.Text;
+            }
+            Environment.SetEnvironmentVariable("GW_LAUNCH_ARGS", text);
+            if (!File.Exists(Path.Combine(gameDir, s_destDLLName)))
+            {
 
-        }
-        ProcessStartInfo startInfo2 = new ProcessStartInfo
-        {
-            FileName = Path.Combine(gameDir, path),
-            Arguments = text,
-            UseShellExecute = false
-        };
-        Process process2 = new Process
-        {
-            StartInfo = startInfo2,
-            EnableRaisingEvents = true
-        };
-        process2.Exited += GameProcess_Exited;
-        try
-        {
-            process2.Start();
-            GameStatusLabel.Text = $"Game launched (PID {process2.Id})";
-            GameStatusLabel.ForeColor = Color.LightGreen;
-        }
-        catch (Win32Exception ex3)
-        {
-            if (ex3.NativeErrorCode == 2)
-            {
-                GameStatusLabel.Text = "Game executable not found.";
+                try
+                {
+                    File.Copy(GetServerDLLName(), Path.Combine(gameDir, s_destDLLName), overwrite: true);
+                }
+                catch (Exception ex2)
+                {
+                    MessageBox.Show("Exception when attempting to copy " + GetServerDLLName() + ": " + ex2.Message);
+                    return;
+                }
+
             }
-            else
+            ProcessStartInfo startInfo2 = new ProcessStartInfo
             {
-                MessageBox.Show("Exception: " + ex3.Message);
+                FileName = Path.Combine(gameDir, path),
+                Arguments = text,
+                UseShellExecute = false
+            };
+            Process process2 = new Process
+            {
+                StartInfo = startInfo2,
+                EnableRaisingEvents = true
+            };
+            process2.Exited += GameProcess_Exited;
+            try
+            {
+                process2.Start();
+                GameStatusLabel.Text = $"Game launched (PID {process2.Id})";
+                GameStatusLabel.ForeColor = Color.LightGreen;
             }
-        }
-        catch (Exception ex4)
-        {
-            MessageBox.Show("Exception: " + ex4.Message);
+            catch (Win32Exception ex3)
+            {
+                if (ex3.NativeErrorCode == 2)
+                {
+                    GameStatusLabel.Text = "Game executable not found.";
+                }
+                else
+                {
+                    MessageBox.Show("Exception: " + ex3.Message);
+                }
+            }
+            catch (Exception ex4)
+            {
+                MessageBox.Show("Exception: " + ex4.Message);
+            }
         }
     }
-
 }

@@ -18,7 +18,7 @@ Here are the Tale of the Taco Crazy Settings. These only work in certain game mo
 GameMode.IceCreamRain - Rain of Flavors - Suburbination
 GameMode.TacoPanic - Taco Panic - Capture the Taco
 GameMode.Salsa - Propulsive Salsa - Team Vanquish
-GameMode.CheeseCapture - Diary Disaster - Gardens and Graveyards (Exception of Wallnut HillS)
+GameMode.CheeseCapture - Diary Disaster - Gardens and Graveyards (Exception of Wallnut Hills)
 GameMode.NeutralGnomus - Hot Headed Rumble - Soil Survivors
 GameMode.CheeseTraps - Devious Cheese - Gnome Bomb
 GameMode.RushDelivery - Snack Attack - Herbal Assault
@@ -27,8 +27,69 @@ GameMode.FarewellTaco - Farewell Taco - Vanquished Confirmed
 
 Here are some Misc. settings!
 SyncedGame.EnableFriendlyFire - Enables janky functionality for Friendly Fire
-GameMode.ModeTeamId - Determines the team you spawn in. For modes such as Boss Hunts and Infinity Time. Zombies is 1, Plants is 2.
-GameMode.StoredDifficultyIndex  - Determines the Difficulty. Multiplayer is 0, Easy is 1, Normal is 2, Hard is 3, and CRAAAZZY is 4.
+PVZServer.InActivityTimeOut - Determines how long, in seconds, a client is inactive for before getting kicked out.
+PVZServer.KickIdlePlayers - Determines if inactive players should get kicked for inactivity.
+GameMode.LocalPlayMaxBotsPerTeam - Determines how many AI Bots from each team is in a singular session.
+GameMode.LocalPlaySelectedAICharacterSetZombiesUnlockId - Determines what AI Zombie Character set is used based on the AICharacterSetUnlockAsset's Identifier.
+GameMode.LocalPlaySelectedAICharacterSetPlantsUnlockId - Determines what AI Plant Character set is used based on the AICharacterSetUnlockAsset's Identifier.
+
+NOTE: make sure to also copy the negative, -, if the value has that.
+
+Plants
+Plants Attack: 1182127572
+Classic Plants: 884356166
+New Plant Heroes: 1669382606
+Fire & Ice: -497209485
+Cactus Surprise: 395423763
+Chomper Brigade: 257935690
+Mighty Citron: 738658283
+Revenge of the Cob: -738949206
+101st Peashooter Division: 26695173
+Rose Infusion: -1637818922
+Sunflowers of Happiness: 164464246
+Seven Plants: 879224742
+It's Electric: 3416771774
+Cops & Robbers: 1521111286
+Future Fighters: -1130315458
+None: -1126022106
+
+Zombies
+Zombie Invasion: 1666433905
+Classic Zombies: -858888593
+New Zombie Heroes: 1027260339
+Nature Zombies: -848664588
+Engineer Overload: 741282899
+All-Star Heroes: 1571262552
+Imp Invasion: 1628101617
+Pirate Ho!: -1598826873
+For Science: 1118691493
+Super Soldiers: -730509255
+League of Super Brainz - -1307739663
+Undercover: 39378493
+2 & a half Zombies: -1086298278
+Supremos' Revenge: -2002885868
+Seven Zombies: -506278414
+Z7 Invasion: 1458620334
+Historians: 238328608
+Fire & Ice Zombies: 914566891
+Cosmic Overload: -536379798
+None: -523264879
+
+
+GameMode.ModeTeamId - Determines the team you spawn in. For modes such as Boss Hunts and Infinity Time. 
+Zombies - 1
+Plants - 2
+
+
+GameMode.StoredDifficultyIndex  - Determines the Difficulty. 
+Multiplayer - 0 
+Easy - 1 
+Normal - 2
+Hard - 3 
+CRRRRRAAAZY!! - 4
+
+GameMode.DisableHUBAISpawns - Disables AI in the Backyard Battleground
+GameMode.ForceHUBTimeOfDay - Forces the Backyard's TOD. DAY and NIGHT (Case Sensitive)
 GameMode.AvailableCostumes - Determines what characters are available to be used. Determined by a character's Primary weapon's Unlock Asset's Identifier (not to be confused with WeaponIdentifier). Separated by semicolons ;
 EXAMPLE: 
 GameMode.AvailableCostumes 1364115386;-1690576028;-1633673158  - Allows only Default All-Star, Imp, and Citron to be selected.

@@ -52,30 +52,30 @@ Now you know all the levels, here are all the available Game Modes. DO KEEP IN M
 
 MISC:
 FreeRoam - Supported by Backyard Battleground, Trials of Gnomus, and Colizeum
-StreamingInstall - Supported by Moon Base Z (Mystery of the Moon pre-installation)
-SinglePlayerPlants0 - Supported by Zomburbia (Tutorial)
-Splash - Supported by Splash Screen
+StreamingInstall - Mystery of the Moon  - Supported by Moon Base Z
+SinglePlayerPlants0 - Tutorial - Supported by Zomburbia
+Splash - Splash Screen -  Supported by Splash Screen
 
 Ops:
-GardenOps0 - Supported by all Levels under the COOP tab (Garden Ops)
-GraveyardOps0 - Supported by all Levels under the COOP tab (Graveyard Ops)
-Endless0 - Supported by The Gnomiverse (Infinity Time)
+GardenOps0 - Garden Ops - Supported by all Levels under the COOP tab
+GraveyardOps0 - Graveyard Ops - Supported by all Levels under the COOP tab
+Endless0 - Infinity Time - Supported by The Gnomiverse
 
 Turf Takeover:
-GnGLarge0 - Supported by all levels under the RUSH tab (Gardens and Graveyards)
-HerbalAssaultLarge0 = Supported by all levels under the HERB tab (Herbal Assault)
+GnGLarge0 - Gardens and Graveyards - Supported by all levels under the RUSH tab
+HerbalAssaultLarge0 - Herbal Assault - Supported by all levels under the HERB tab
 
 Team Modes:
-TeamVanquishLarge0 - Supported by all Levels under the COOP tab AND the Community Portal version of the Backyard (Team Vanquish)
-VanquishConfirmedLarge0 - Supported by all Levels under the COOP tab AND the Community Portal version of the Backyard (Vanquish Confirmed)
-TeamVanquishGoats0 - Supported by all Levels under the COOP tab (Team Vanquish Goats) 
-SuburbinationLarge0 - Supported by all Levels under the COOP tab (Suburbination)
-GnomeBomb0 - Supported by all Levels under the COOP tab (Gnome Bomb)
-TeamElimination0 - Supported by all Levels under the COOP tab (Soil Survivors)
-TacoBandits0 - Supported by Zen Peak, Colizeum, Lunar Landing, Frontline Flats, and the Community Portal Backyard Battleground.
-BossHunt0 - Supported by Time Park (Royal Hypno Flower) and Frosty Creek (Captain Smasher)
-CommunityBossHunt0 - Supported by Aqua Center (Spooky Squash) Time Park (Brothers Gnomus) Sandy Sands (Sasquatch) Frosty Creek (Yeti King)
-CatsVsDinos0 - Supported by Gnomiverse XL (Cats vs. Dinos)
+TeamVanquishLarge0 - Team Vanquish - Supported by all Levels under the COOP tab AND the Community Portal version of the Backyard
+VanquishConfirmedLarge0 - Vanquish Comfirmed - Supported by all Levels under the COOP tab AND the Community Portal version of the Backyard
+TeamVanquishGoats0 - Team Vanquish Goats - Supported by all Levels under the COOP tab
+SuburbinationLarge0 - Suburbination - Supported by all Levels under the COOP tab
+GnomeBomb0 - Gnome Bomb - Supported by all Levels under the COOP tab 
+TeamElimination0 - Soil Survivors - Supported by all Levels under the COOP tab EXCEPT Time Park
+TacoBandits0 - Capture The Taco  - Supported by Zen Peak, Colizeum, Lunar Landing, Frontline Flats, and the Community Portal Backyard Battleground.
+BossHunt0 - Storyline Boss Hunt - Supported by Time Park (Royal Hypno Flower) and Frosty Creek (Captain Smasher)
+CommunityBossHunt0 - Community Boss Hunt - Supported by Aqua Center (Spooky Squash) Time Park (Brothers Gnomus) Sandy Sands (Sasquatch) Frosty Creek (Yeti King)
+CatsVsDinos0 - Cats vs. Dinos - Supported by Gnomiverse XL 
 
 
 Here are some Time of Day values!

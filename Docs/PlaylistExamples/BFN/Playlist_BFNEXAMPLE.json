@@ -1,0 +1,32 @@
+{
+  "RoundsPerSetup": 2,
+  "IsMixed": false,
+  "PlaylistRotation": [
+    {
+      "LevelName": "Levels/DSub_TVM_Suburbs/DSub_TVM_Suburbs",
+      "GameMode": "Mode_Competitive_24",
+      "StartPoint": "StartPoint_TVM",
+      "SettingsToApply": "GameMode.WeeklyEventIndex 10|GameMode.OverrideRoundStartPlayerCount 1",
+      "Loadscreen_LevelName": "ID_LEVEL_TC_TVM",
+      "Loadscreen_LevelDescription": "ID_LOADINGTEXT_MAPDESC_TVM_TOWNCENTERLIGHT",
+      "Loadscreen_GamemodeName": "ID_MODENAME_TVM"
+    },
+    {
+      "LevelName": "Levels/Dsub_Rush_Farm/DSub_Rush_Farm",
+      "GameMode": "Mode_Competitive_24",
+      "StartPoint": "StartPoint_Rush",
+      "SettingsToApply": "GameMode.IsCoolLasers true|GameMode.WeeklyEventIndex 9",
+      "Loadscreen_LevelName": "ID_LEVELNAME_FARM",
+      "Loadscreen_LevelDescription": "ID_LOADINGTEXT_MAPDESC_TT_FARM",
+      "Loadscreen_GamemodeName": "ID_MODENAME_TT"
+    },
+    {
+      "LevelName": "Levels/DSub_TVM_ZRefinery/DSub_TVM_ZRefinery",
+      "GameMode": "Mode_Competitive_24",
+      "StartPoint": "StartPoint_TVM",
+      "Loadscreen_LevelName": "ID_LEVELNAME_ZREFINERY",
+      "Loadscreen_LevelDescription": "ID_LOADINGTEXT_MAPDESC_TVM_ZREFINERY",
+      "Loadscreen_GamemodeName": "ID_MODENAME_TVM"
+    }
+  ]
+}
