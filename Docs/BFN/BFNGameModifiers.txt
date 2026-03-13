@@ -1,5 +1,9 @@
 NOW IT'S TIME FOR EVERYBODY'S FAAAVOOIRRTTEE SUBJECT, GAME MODIFIERS!!!!! Here, we will be going over certain commands you can apply before or while the game is running to change the game in some way!
 
+If you want to add these as launch arguments in the Additional Server Launch Arguments box, ensure they have a dash, -, at the start. For example: -GameMode.CrazyOption2 true
+
+These are separated by spaces. Example: -GameMode.CrazyOption2 true -GameMode.CrazyOption5 true
+
 GameMode.CrazyOption1 - There is no Easter Bunny, there is no Tooth Fairy, and there is no CrazyOption1
 GameMode.CrazyOption2 - Low Gravity
 GameMode.CrazyOption3 - Half Health
@@ -136,7 +140,7 @@ Wizard - 1024
 TV Head - 2048
 
 
-Any character(s) you want to hide, you add up based on the mask value, the numbers on the right. So, in this instance, if you want to hide Scientist and All-Star, so no AI of them spawn, you would add 256 and 64, and 320 will be the value used for 
+Any character(s) you want to hide, you add up based on the mask value, the numbers on the right. So, in this instance, if you want to hide Scientist and All-Star, so no AI of them spawn, you would add 256 and 64, and 320 will be the value used for SoloPlaySettings.DisabledZombieAIClassMask
 
 
 SyncedPVZSettings.CharacterKillSwitches - Prevents you from selecting specified classes. Based on name of the Class' Kit file.

@@ -177,6 +177,8 @@ public class LaunchWindow : Form
     private TextBox StartPointTextBox;
     private Label label7;
     private CheckBox AllowAIBackfillCheckBox;
+    private Label FOVLabel;
+    private TextBox FOVTextBox;
     private Label ServerPasswordLabel;
 
     public LaunchWindow()
@@ -337,6 +339,7 @@ public class LaunchWindow : Form
             jObject2["PlayerCount"] = PlayerCountTextBox.Text;
             jObject2["AdditionalServerLaunchArguments"] = AdditionalServerLaunchArgumentsTextBox.Text;
             jObject2["StartPoint"] = StartPointTextBox.Text;
+            jObject2["FOV"] = FOVTextBox.Text;
             string text = GameSelectorComboBox.SelectedItem.ToString();
             jObject["SelectedGame"] = text;
             jObject[text] = jObject2;
@@ -434,6 +437,10 @@ public class LaunchWindow : Form
                 {
                     StartPointTextBox.Text = (string?)jObject2["StartPoint"];
                 }
+                if (jObject2.ContainsKey("FOV"))
+                {
+                    FOVTextBox.Text = (string?)jObject2["FOV"];
+                }
             }
             else if (profileName == null && jObject.ContainsKey("SelectedGame") && Enum.TryParse<PVZGame>((string?)jObject["SelectedGame"], out result))
             {
@@ -489,6 +496,10 @@ public class LaunchWindow : Form
                     if (jObject3.ContainsKey("StartPoint"))
                     {
                         StartPointTextBox.Text = (string?)jObject3["StartPoint"];
+                    }
+                    if (jObject3.ContainsKey("FOV"))
+                    {
+                        FOVTextBox.Text = (string?)jObject3["FOV"];
                     }
                 }
             }
@@ -604,7 +615,18 @@ public class LaunchWindow : Form
         {
             text = text + " -datapath \"" + Path.Combine(GetGameDir(), "ModData", ModPackCombobox.Text + "\"");
         }
-
+        if (!string.IsNullOrWhiteSpace(FOVTextBox.Text))
+        {
+            double FOVValue = 0.0;
+            double DefaultFOV = 70;
+            double FOVMutliplier = 0.0;
+            
+            string FOVValueText = FOVTextBox.Text;
+            FOVValue = double.Parse(FOVTextBox.Text);
+            FOVMutliplier = FOVValue / DefaultFOV;
+            
+            text = text + " -Render.FovMultiplier " + FOVMutliplier.ToString();
+        }
         if (!string.IsNullOrWhiteSpace(AdditionalLaunchArgumentsBox.Text))
         {
             text = text + " " + AdditionalLaunchArgumentsBox.Text;
@@ -748,6 +770,21 @@ public class LaunchWindow : Form
             AllowAIBackfillCheckBox.Visible = false;
         }
 
+        //Hide FOV box in GW1 since FovMultiplier doesn't work
+        if (m_selectedGame > PVZGame.GW1)
+        {
+            FOVLabel.Visible = true;
+            FOVLabel.Enabled = true;
+            FOVTextBox.Visible = true;
+            FOVTextBox.Enabled = true;
+        }
+        else
+        {
+            FOVLabel.Visible = false;
+            FOVLabel.Enabled = false;
+            FOVTextBox.Visible = false;
+            FOVTextBox.Enabled = false;
+        }    
         LoadUserData(m_selectedGame.ToString());
     }
 
@@ -862,6 +899,8 @@ public class LaunchWindow : Form
         StartPointTextBox = new TextBox();
         label7 = new Label();
         AllowAIBackfillCheckBox = new CheckBox();
+        FOVLabel = new Label();
+        FOVTextBox = new TextBox();
         SuspendLayout();
         // 
         // ServerIPTextBox
@@ -870,7 +909,7 @@ public class LaunchWindow : Form
         ServerIPTextBox.Location = new Point(150, 183);
         ServerIPTextBox.Name = "ServerIPTextBox";
         ServerIPTextBox.Size = new Size(215, 23);
-        ServerIPTextBox.TabIndex = 6;
+        ServerIPTextBox.TabIndex = 7;
         // 
         // label1
         // 
@@ -887,7 +926,7 @@ public class LaunchWindow : Form
         JoinButton.Location = new Point(150, 313);
         JoinButton.Name = "JoinButton";
         JoinButton.Size = new Size(215, 23);
-        JoinButton.TabIndex = 9;
+        JoinButton.TabIndex = 10;
         JoinButton.Text = "Join Server!";
         JoinButton.UseVisualStyleBackColor = true;
         JoinButton.Click += JoinButton_Click;
@@ -920,7 +959,7 @@ public class LaunchWindow : Form
         UsernameTextbox.MaxLength = 32;
         UsernameTextbox.Name = "UsernameTextbox";
         UsernameTextbox.Size = new Size(215, 23);
-        UsernameTextbox.TabIndex = 5;
+        UsernameTextbox.TabIndex = 6;
         // 
         // GameDirectoryLabel
         // 
@@ -969,7 +1008,7 @@ public class LaunchWindow : Form
         AdditionalLaunchArgumentsBox.Location = new Point(150, 284);
         AdditionalLaunchArgumentsBox.Name = "AdditionalLaunchArgumentsBox";
         AdditionalLaunchArgumentsBox.Size = new Size(215, 23);
-        AdditionalLaunchArgumentsBox.TabIndex = 8;
+        AdditionalLaunchArgumentsBox.TabIndex = 9;
         // 
         // GameSelectorComboBox
         // 
@@ -1039,7 +1078,7 @@ public class LaunchWindow : Form
         ServerPasswordTextBox.Location = new Point(151, 235);
         ServerPasswordTextBox.Name = "ServerPasswordTextBox";
         ServerPasswordTextBox.Size = new Size(215, 23);
-        ServerPasswordTextBox.TabIndex = 7;
+        ServerPasswordTextBox.TabIndex = 8;
         // 
         // label8
         // 
@@ -1077,7 +1116,7 @@ public class LaunchWindow : Form
         DedicatedServerPasswordTextBox.Location = new Point(456, 284);
         DedicatedServerPasswordTextBox.Name = "DedicatedServerPasswordTextBox";
         DedicatedServerPasswordTextBox.Size = new Size(215, 23);
-        DedicatedServerPasswordTextBox.TabIndex = 13;
+        DedicatedServerPasswordTextBox.TabIndex = 14;
         // 
         // InclusionLabel
         // 
@@ -1095,7 +1134,7 @@ public class LaunchWindow : Form
         InclusionTextBox.Location = new Point(456, 235);
         InclusionTextBox.Name = "InclusionTextBox";
         InclusionTextBox.Size = new Size(215, 23);
-        InclusionTextBox.TabIndex = 12;
+        InclusionTextBox.TabIndex = 13;
         // 
         // DeviceIPLabel
         // 
@@ -1113,14 +1152,14 @@ public class LaunchWindow : Form
         DeviceIPTextBox.Location = new Point(456, 135);
         DeviceIPTextBox.Name = "DeviceIPTextBox";
         DeviceIPTextBox.Size = new Size(215, 23);
-        DeviceIPTextBox.TabIndex = 10;
+        DeviceIPTextBox.TabIndex = 11;
         // 
         // StartServerButton
         // 
         StartServerButton.Location = new Point(456, 313);
         StartServerButton.Name = "StartServerButton";
         StartServerButton.Size = new Size(215, 23);
-        StartServerButton.TabIndex = 14;
+        StartServerButton.TabIndex = 15;
         StartServerButton.Text = "Start Server!";
         StartServerButton.UseVisualStyleBackColor = true;
         StartServerButton.Click += StartServerButton_Click;
@@ -1141,7 +1180,7 @@ public class LaunchWindow : Form
         LevelTextBox.Location = new Point(456, 183);
         LevelTextBox.Name = "LevelTextBox";
         LevelTextBox.Size = new Size(215, 23);
-        LevelTextBox.TabIndex = 11;
+        LevelTextBox.TabIndex = 12;
         // 
         // ServerPasswordLabel
         // 
@@ -1187,7 +1226,7 @@ public class LaunchWindow : Form
         AdditionalServerLaunchArgumentsTextBox.Location = new Point(456, 32);
         AdditionalServerLaunchArgumentsTextBox.Name = "AdditionalServerLaunchArgumentsTextBox";
         AdditionalServerLaunchArgumentsTextBox.Size = new Size(272, 23);
-        AdditionalServerLaunchArgumentsTextBox.TabIndex = 19;
+        AdditionalServerLaunchArgumentsTextBox.TabIndex = 21;
         // 
         // PlaylistLabel
         // 
@@ -1256,10 +1295,29 @@ public class LaunchWindow : Form
         AllowAIBackfillCheckBox.CheckAlign = ContentAlignment.MiddleRight;
         AllowAIBackfillCheckBox.Location = new Point(703, 313);
         AllowAIBackfillCheckBox.Name = "AllowAIBackfillCheckBox";
-        AllowAIBackfillCheckBox.Size = new Size(85, 19);
-        AllowAIBackfillCheckBox.TabIndex = 36;
+        AllowAIBackfillCheckBox.Size = new Size(111, 19);
+        AllowAIBackfillCheckBox.TabIndex = 20;
         AllowAIBackfillCheckBox.Text = "Allow AI Backfill";
         AllowAIBackfillCheckBox.UseVisualStyleBackColor = false;
+        // 
+        // FOVLabel
+        // 
+        FOVLabel.AutoSize = true;
+        FOVLabel.BackColor = SystemColors.Control;
+        FOVLabel.Location = new Point(5, 237);
+        FOVLabel.Name = "FOVLabel";
+        FOVLabel.Size = new Size(76, 15);
+        FOVLabel.TabIndex = 37;
+        FOVLabel.Text = "Field Of View";
+        // 
+        // FOVTextBox
+        // 
+        FOVTextBox.Anchor = AnchorStyles.Bottom;
+        FOVTextBox.Location = new Point(5, 255);
+        FOVTextBox.MaxLength = 32;
+        FOVTextBox.Name = "FOVTextBox";
+        FOVTextBox.Size = new Size(46, 23);
+        FOVTextBox.TabIndex = 5;
         // 
         // LaunchWindow
         // 
@@ -1267,6 +1325,8 @@ public class LaunchWindow : Form
         AutoScaleMode = AutoScaleMode.Font;
         BackgroundImageLayout = ImageLayout.Stretch;
         ClientSize = new Size(867, 450);
+        Controls.Add(FOVLabel);
+        Controls.Add(FOVTextBox);
         Controls.Add(AllowAIBackfillCheckBox);
         Controls.Add(label7);
         Controls.Add(StartPointLabel);
@@ -1473,7 +1533,7 @@ public class LaunchWindow : Form
             }
             if (!aibackfillflag)
             {
-                text = text + "-GameMode.BackfillMpWithAI false";
+                text = text + " -GameMode.BackfillMpWithAI false";
             }
             if (s_serverLaunchArgsForGame.ContainsKey(m_selectedGame))
             {
