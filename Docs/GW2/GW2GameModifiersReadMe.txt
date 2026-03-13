@@ -15,14 +15,14 @@ GameMode.HealingAuras - Healing Auras
 GameMode.Berserk - Berserker
 
 Here are the Tale of the Taco Crazy Settings. These only work in certain game modes.
-GameMode.IceCreamRain - Rain of Flavors - Suburbination
+GameMode.IceCreamRain - Rain of Flavors - Suburbination 
 GameMode.TacoPanic - Taco Panic - Capture the Taco
-GameMode.Salsa - Propulsive Salsa - Team Vanquish
-GameMode.CheeseCapture - Diary Disaster - Gardens and Graveyards (Exception of Wallnut Hills)
+GameMode.Salsa - Propulsive Salsa - Team Vanquish (Except Backyard)
+GameMode.CheeseCapture - Dairy Disaster - Gardens and Graveyards
 GameMode.NeutralGnomus - Hot Headed Rumble - Soil Survivors
 GameMode.CheeseTraps - Devious Cheese - Gnome Bomb
 GameMode.RushDelivery - Snack Attack - Herbal Assault
-GameMode.FarewellTaco - Farewell Taco - Vanquished Confirmed
+GameMode.FarewellTaco - Farewell Taco - Vanquished Confirmed (Except Backyard)
 
 
 Here are some Misc. settings!
