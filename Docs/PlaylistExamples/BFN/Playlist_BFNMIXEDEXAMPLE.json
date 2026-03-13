@@ -7,7 +7,7 @@
   "AvailableModes": {
     "StartPoint_TVM": "Mode_Competitive_24",
     "StartPoint_Suburbination": "Mode_Competitive_24",
-    "StartPoint_SocialSpace": "Mode_Competitive_24"
+    "StartPoint_GnomeBomb": "Mode_Competitive_24"
   },
   "AvailableLevelsForModes": {
     "StartPoint_TVM": [
