@@ -12,7 +12,7 @@ Cypress is a project dedicated to bringing back dedicated server functionality t
 
 If you're reading this, hiya! Welcome to the readme!
 
-This is a modified version of Brekko's launcher for Cypress to include small quality of life changes and adds the ability to host dedicated servers of GW1 and GW2!
+This is a modified version of Brekko's launcher for Cypress to include small quality of life changes and adds the ability to host dedicated servers of GW1, GW2, and BFN!
 
 Here's a basic rundown of the launcher!
 
