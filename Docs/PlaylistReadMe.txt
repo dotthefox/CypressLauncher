@@ -8,6 +8,7 @@ IsMixed - A boolean that determines if Levels and GameModes will be randomized i
 Loadscreen_GamemodeNameOverride - Overrides the GameMode's name. Will affect every level in rotation of the playlist.
 Loadscreen_LevelNameOverride - Overrides level's name. Will affect every level in rotation of the playlist.
 Loadscreen_LevelDescriptionOverride - Overrides the Level's Description. Will affect every level in rotation of the playlist.
+Loadscreen_UIAssetPathOverride - Overrides the Level's Load Screen. Will affect every level in rotation of the playlist.
 
 
 Here are two different methods of Rotations. PlaylistRotation, and if IsMixed is set to true. Let's go over PlaylistRotation. 
@@ -27,7 +28,6 @@ StartPoint is equivalent to that of Sub-GameModes. More Info in the BFNLevelInfo
 TOD is the Time of Day, whether it's Day or Night
 SettingsToApply are game changing settings/modifiers that'll be applied to the server.
 
-
 Remember, If you want settings, like let's say for this example, crazy settings! You will put certain settings that'll be applied to SettingsToApply. Each entry in SettingsToApply is separated by a Vertical Bar, or | 
 
 Example:
@@ -39,6 +39,11 @@ GameMode.CrazyOption8 false|GameMode.CrazyOption3 false
 
 More info on Game Modifiers can be found in any GameModifiersReadMes.
 
+Loadscreen_GamemodeName (Optional) - Overrides the GameMode's name.
+Loadscreen_LevelName (Optional) - Overrides level's name.
+Loadscreen_LevelDescription (Optional) - Overrides the Level's Description.
+Loadscreen_UIAssetPath (Optional) - Overrides the Level's Load Screen. - Use example, wanting to replace the Sandy Sands loading screen with the one from Sasquatch, you set "LoadScreen_UIAssetPath" to "_pvz/UI/Assets/LoadScreen_CP_Sasquatch"
+
 
 -- ISMIXED --
 If IsMixed is set to true, Cypress will expect two settings, an additional, optional setting. Those being:
@@ -49,11 +54,3 @@ AvailableTODForLevels - Optional - A list determining what Levels will have Time
 Examples of the structurization can be found inside the PlaylistExamples folder.
 
 Bit of a heads up, the structure on playlists using IsMixed for BFN is a tad different. If you wish to make randomized Playlists for BFN, it's recommended to check the example provided and check up its LevelInfo ReadMe.
-
-
-
-
-
-
-
-
