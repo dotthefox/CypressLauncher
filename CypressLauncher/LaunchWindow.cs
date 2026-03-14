@@ -1447,10 +1447,10 @@ public class LaunchWindow : Form
         if (m_selectedGame < PVZGame.BFN)
         {
 
-            text = "-server -level " + LevelTextBox.Text + " -listen " + DeviceIPTextBox.Text + " -inclusion " + InclusionTextBox.Text + " -allowMultipleInstances " + "-Network.ServerAddress" + DeviceIPTextBox.Text + " ";
+            text = "-server -level " + LevelTextBox.Text + " -listen " + DeviceIPTextBox.Text + " -inclusion " + InclusionTextBox.Text + " -allowMultipleInstances " + "-Network.ServerAddress " + DeviceIPTextBox.Text;
             if (!string.IsNullOrWhiteSpace(DedicatedServerPasswordTextBox.Text))
             {
-                text = text + " -password " + DedicatedServerPasswordTextBox.Text;
+                text = text + " -Server.ServerPassword " + DedicatedServerPasswordTextBox.Text;
             }
             if (playlistflag)
             {
@@ -1522,7 +1522,7 @@ public class LaunchWindow : Form
             text = "-server" + " -listen " + DeviceIPTextBox.Text + " -dsub " + LevelTextBox.Text + " -inclusion " + InclusionTextBox.Text + " -startpoint " + StartPointTextBox.Text + " -allowMultipleInstances -enableServerLog " + "-Network.ServerAddress " + DeviceIPTextBox.Text;
             if (!string.IsNullOrWhiteSpace(DedicatedServerPasswordTextBox.Text))
             {
-                text = text + " -password " + DedicatedServerPasswordTextBox.Text;
+                text = text + " -Server.ServerPassword " + DedicatedServerPasswordTextBox.Text;
             }
             if (playlistflag)
             {
