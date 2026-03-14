@@ -14,14 +14,20 @@
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace />
-    <ApplicationIcon>CypressLogo.ico</ApplicationIcon>
+    <ApplicationIcon>assets\Burbank-CypressIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="CypressLogo.ico" />
+    <Content Include="assets\Burbank-CypressIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\Newtonsoft.Json.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="assets\Burbank-CypressIcon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 </Project>

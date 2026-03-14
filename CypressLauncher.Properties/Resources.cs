@@ -47,6 +47,10 @@ internal class Resources
 
 	internal static Bitmap GW2 => (Bitmap)ResourceManager.GetObject("GW2", resourceCulture);
 
+	internal static Bitmap BFN => (Bitmap)ResourceManager.GetObject("BFN", resourceCulture);
+
+	internal static Bitmap CypressIcon => (Bitmap)ResourceManager.GetObject("CypressIcon", resourceCulture);
+
 	internal Resources()
 	{
 	}
