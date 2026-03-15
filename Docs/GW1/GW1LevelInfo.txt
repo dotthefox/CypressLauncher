@@ -46,7 +46,7 @@ SmallTDM - Supported by all Levels under the COOP tab (Super Team Vanquish)
 KillConfirmed - Supported by all Levels under the COOP (Vanquish Confirmed)
 Domination - Supported by all Levels under the COOP tab (Suburbination)
 GnomeBomb - Supported by all Levels under the COOP tab (Gnome Bomb)
-SingleFlagCFT - Supported by all Levels under the COOP tab (Taco Bandits)
+SingleFlagCTF - Supported by all Levels under the COOP tab (Taco Bandits)
 ChompVirus - Supported by Garden Center (0) and Chomp Town (1)
 
 
