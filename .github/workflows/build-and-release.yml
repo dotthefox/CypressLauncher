@@ -1,0 +1,106 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout CypressLauncher
+      uses: actions/checkout@v4
+      with:
+        lfs: true
+
+    - name: Clone PvZCypress
+      uses: actions/checkout@v4
+      with:
+        repository: BreakfastBrainz2/PvZCypress
+        path: PvZCypress
+
+    - name: Clone PvZCypress-BFN
+      uses: actions/checkout@v4
+      with:
+        repository: dotthefox/PvZCypress-BFN
+        path: PvZCypress-BFN
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.0.x
+          9.0.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Setup Newtonsoft.Json reference
+      shell: pwsh
+      run: Copy-Item "Newtonsoft.Json.dll" ".."
+
+    - name: Build CypressLauncher
+      shell: pwsh
+      run: dotnet publish CypressLauncher.csproj -c Release -o publish/CypressLauncher /p:LangVersion=latest
+
+    - name: Build Cypress - GW2
+      run: msbuild PvZCypress/Cypress.sln /p:Configuration=Release /p:Platform=x64 /m
+
+    - name: Build Cypress - GW1
+      run: msbuild PvZCypress/Cypress.sln "/p:Configuration=Release - GW1" /p:Platform=x64 /m
+
+    - name: Prepare BFN libraries
+      shell: pwsh
+      run: |
+        New-Item -ItemType Directory -Force -Path "PvZCypress-BFN/lib/Release"
+        Copy-Item "PvZCypress/lib/Release/EASTL.lib" "PvZCypress-BFN/lib/Release/"
+
+    - name: Build Cypress - BFN
+      run: msbuild PvZCypress-BFN/Cypress.sln /p:Configuration=Release /p:Platform=x64 /p:PlatformToolset=v143 /m
+
+    - name: Stage release artifacts
+      shell: pwsh
+      run: |
+        $stage = "release/CypressLauncher"
+
+        New-Item -ItemType Directory -Force -Path $stage
+        Copy-Item "publish/CypressLauncher/*" $stage -Recurse
+
+        Copy-Item "PvZCypress/x64/Release/Cypress.dll" "$stage/cypress_GW2.dll"
+        Copy-Item "PvZCypress/x64/Release - GW1/Cypress.dll" "$stage/cypress_GW1.dll"
+        Copy-Item "PvZCypress-BFN/x64/Release/Cypress.dll" "$stage/cypress_BFN.dll"
+
+        Copy-Item "courgette.exe" $stage
+        Copy-Item "GW2.patch" $stage
+        Copy-Item "BFN.Patch" $stage
+
+        Copy-Item "Docs" "$stage/README" -Recurse
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: CypressLauncher
+        path: release/CypressLauncher
+
+    - name: Create release archive
+      if: startsWith(github.ref, 'refs/tags/v')
+      shell: pwsh
+      run: |
+        $tag = "${{ github.ref_name }}"
+        Compress-Archive -Path "release/CypressLauncher/*" -DestinationPath "CypressLauncher-$tag.zip"
+
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: CypressLauncher-*.zip
+        generate_release_notes: true
+        draft: false
+        prerelease: false
