@@ -17,7 +17,7 @@ Here are commands to enable/disable these measures. If you want to disable them 
 Anticheat.Enabled - Enables the Anticheat
 Anticheat.Verbose - Enables Anticheat Verbose, good for debugging, and also tells you who exactly is attempting to do what
 Anticheat.PreventClientBuffs - Enables measure to prevent Buffs from a player's client being initiated
-Anticheat.PreventBlacklistedEventSyncs - Enables measures to prevent Blacklisted Event Syncs (Pausing Timer, Ending Round for example) from being initatied
+Anticheat.PreventBlacklistedEventSyncs - Enables measures to prevent Blacklisted Event Syncs (Pausing Timer, Ending Round for example) from being initiated
 Anticheat.PreventInvalidLoadouts - Enables measures to prevent players from using an invalid loadout compared to the server's initial loadout (no more boss mods)
 Anticheat.PreventPlayerSwap - Enables measures to block Player Swap.
 Anticheat.PreventAliveWeaponChange - Enables measures to prevent players from changing their loadout while being alive
