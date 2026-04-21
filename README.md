@@ -1,4 +1,9 @@
-# CypressLauncher
+# Cypress Launcher [LEGACY]
+
+# ARCHIVED
+**With the revamped overhaul of the Cypress launcher being released, this Legacy version will now be in an archival state. Effective immediately, support for this version will no longer be available. If you want to stay up to date with Cypress, join the [PvZ FB Modding Discord](https://discord.com/invite/jr64wVezY4) or check out the [revamped launcher's repo!](https://github.com/PvZ-Cypress/Launcher)**
+
+# INFO
 
 The Cypress Launcher is an easy to use launcher for [Cypress](https://github.com/BreakfastBrainz2/PvZCypress), a project that reimplements Dedicated Servers for the PvZ Shooters. 
 
